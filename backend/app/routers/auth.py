@@ -7,8 +7,18 @@ from app.crud.user import create_admin
 from app.models.user import Admin
 from app.db import get_db
 from app.auth.jwt import create_access_token
+from app.schemas.user import AdminOut
+
 
 router = APIRouter(prefix="/api", tags=["Auth"])
+
+
+router = APIRouter(prefix="/api", tags=["Admins"])
+
+@router.get("/admins", response_model=list[AdminOut])
+def get_all_admins(db: Session = Depends(get_db)):
+    return db.query(Admin).all()
+
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 

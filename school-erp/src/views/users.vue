@@ -20,55 +20,73 @@
 
         <!-- Admins Table -->
         <div class="overflow-x-auto">
-          <table class="min-w-full bg-white border border-gray-200 rounded-lg shadow">
-            <thead class="bg-gray-100">
-              <tr>
-                <th class="py-2 px-4 text-left">ID</th>
-                <th class="py-2 px-4 text-left">Name</th>
-                <th class="py-2 px-4 text-left hidden md:table-cell">Email</th>
-                <th class="py-2 px-4 text-left hidden md:table-cell">Contact</th>
-                <th class="py-2 px-4 text-center">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              <!-- Dummy Admin Row 1 -->
-              <tr class="hover:bg-gray-50 border-t border-gray-200">
-                <td class="py-2 px-4">1</td>
-                <td class="py-2 px-4">Parakh Chauhan</td>
-                <td class="py-2 px-4 hidden md:table-cell">parakh@example.com</td>
-                <td class="py-2 px-4 hidden md:table-cell">+91 9876543210</td>
-                <td class="py-2 px-4 text-center">
-                  <button class="text-green-600 hover:text-green-800 mr-2">Edit</button>
-                  <button class="text-red-600 hover:text-red-800">Delete</button>
-                </td>
-              </tr>
-              <!-- Dummy Admin Row 2 -->
-              <tr class="hover:bg-gray-50 border-t border-gray-200">
-                <td class="py-2 px-4">2</td>
-                <td class="py-2 px-4">Aarav Nanda</td>
-                <td class="py-2 px-4 hidden md:table-cell">aarav.n@example.com</td>
-                <td class="py-2 px-4 hidden md:table-cell">+91 9123456789</td>
-                <td class="py-2 px-4 text-center">
-                  <button class="text-green-600 hover:text-green-800 mr-2">Edit</button>
-                  <button class="text-red-600 hover:text-red-800">Delete</button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+        <div class="ag-theme-alpine bg-white rounded-lg shadow p-2" style="height: 600px;">
+          <AgGridVue
+              :rowData="adminList"
+              :columnDefs="columnDefs"
+              :gridOptions="gridOptions"
+              :domLayout="'autoHeight'"
+              :theme="'legacy'"
+            >
+            </AgGridVue>
         </div>
+      </div>
       </main>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
+import axios from '../utils/axios.js'
 import Sidebar from '../components/appSidebar.vue'
 import Navbar from '../components/appNavbar.vue'
 
+import { AgGridVue } from "ag-grid-vue3"; // Vue Data Grid Component
+
+const columnDefs = [
+  { headerName: 'ID', field: 'id', sortable: true, filter: true },
+  { headerName: 'Name', field: 'name', sortable: true, filter: true },
+  { headerName: 'Email', field: 'email', sortable: true, filter: true },
+  { headerName: 'Contact', field: 'contact', sortable: true, filter: true },
+  {
+    headerName: 'Actions',
+    field: 'actions',
+    cellRenderer: params => {
+      return `
+        <button class='text-green-600 mr-2 hover:text-green-800'>Edit</button>
+        <button class='text-red-600 hover:text-red-800'>Delete</button>
+      `
+    },
+  },
+]
+
+const gridOptions = {
+  defaultColDef: {
+    flex: 1,
+    minWidth: 100,
+    resizable: true,
+  },
+}
+
+const components = { AgGridVue }
+
+
 const sidebarOpen = ref(false)
+const adminList = ref([])
+
+
+
+onMounted(async () => {
+  try {
+    const response = await axios.get('/admins')
+    adminList.value = response.data
+  } catch (error) {
+    console.error('Failed to fetch admins:', error)
+  }
+})
 </script>
 
-<style scoped>
+<style>
 /* Add optional animations or transitions if you like */
 </style>

@@ -23,56 +23,16 @@
 
         <!-- Students Table -->
         <div class="overflow-x-auto">
-          <table class="min-w-full bg-white border border-gray-200 rounded-lg shadow text-sm">
-  <thead class="bg-gray-100 text-left">
-    <tr>
-      <th class="py-2 px-3">ID</th>
-      <th class="py-2 px-3">Name</th>
-      <th class="py-2 px-3">DOB</th>
-      <th class="py-2 px-3">Gender</th>
-      <th class="py-2 px-3">Nationality</th>
-      <th class="py-2 px-3">Aadhar</th>
-      <th class="py-2 px-3">Blood Group</th>
-      <th class="py-2 px-3">Father</th>
-      <th class="py-2 px-3">Mother</th>
-      <th class="py-2 px-3">Father Phone</th>
-      <th class="py-2 px-3">Roll No</th>
-      <th class="py-2 px-3">Class</th>
-      <th class="py-2 px-3">Section</th>
-      <th class="py-2 px-3">Status</th>
-      <th class="py-2 px-3 text-center">Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr
-      v-for="student in students"
-      :key="student.id"
-      class="hover:bg-gray-50 border-t border-gray-200"
-    >
-      <td class="py-2 px-3">{{ student.id }}</td>
-      <td class="py-2 px-3">{{ student.first_name }} {{ student.last_name }}</td>
-      <td class="py-2 px-3">{{ student.dob }}</td>
-      <td class="py-2 px-3">{{ student.gender }}</td>
-      <td class="py-2 px-3">{{ student.nationality }}</td>
-      <td class="py-2 px-3">{{ student.aadhar_no }}</td>
-      <td class="py-2 px-3">{{ student.blood_group }}</td>
-      <td class="py-2 px-3">{{ student.guardian?.father_name }}</td>
-      <td class="py-2 px-3">{{ student.guardian?.mother_name }}</td>
-      <td class="py-2 px-3">{{ student.guardian?.father_phone }}</td>
-      <td class="py-2 px-3">{{ student.academic?.roll_number }}</td>
-      <td class="py-2 px-3">{{ student.academic?.class_name }}</td>
-      <td class="py-2 px-3">{{ student.academic?.section }}</td>
-      <td class="py-2 px-3">{{ student.status }}</td>
-      <td class="py-2 px-3 text-center whitespace-nowrap">
-        <button class="text-green-600 hover:text-green-800 mr-2">Edit</button>
-        <button class="text-red-600 hover:text-red-800">Delete</button>
-      </td>
-    </tr>
-    <tr v-if="students.length === 0">
-      <td colspan="15" class="text-center py-4">No Students Found</td>
-    </tr>
-  </tbody>
-</table>
+          <div class="ag-theme-alpine bg-white rounded-lg shadow p-2" style="height: 50%; width: 100%;">
+          <AgGridVue
+              :rowData="students"
+              :columnDefs="columnDefs"
+              :gridOptions="gridOptions"
+              :domLayout="'autoHeight'"
+              :theme="'legacy'"
+            >
+            </AgGridVue>
+        </div>
         </div>
       </main>
     </div>
@@ -84,6 +44,43 @@ import { ref, onMounted } from 'vue'
 import axios from 'axios'
 import Sidebar from '../components/appSidebar.vue'
 import Navbar from '../components/appNavbar.vue'
+import { AgGridVue } from 'ag-grid-vue3'
+
+
+const columnDefs = [
+  { headerName: 'ID', field: 'id', sortable: true, filter: true },
+  {
+    headerName: 'Name',
+    valueGetter: params => `${params.data.first_name} ${params.data.last_name}`,
+    sortable: true,
+    filter: true
+  },
+  { headerName: 'DOB', field: 'dob', sortable: true, filter: true },
+  { headerName: 'Gender', field: 'gender', sortable: true, filter: true },
+  { headerName: 'Nationality', field: 'nationality', sortable: true, filter: true },
+  { headerName: 'Aadhar', field: 'aadhar_no', sortable: true, filter: true },
+  { headerName: 'Blood Group', field: 'blood_group', sortable: true, filter: true },
+  { headerName: 'Father', field: 'guardian.father_name', sortable: true, filter: true },
+  { headerName: 'Mother', field: 'guardian.mother_name', sortable: true, filter: true },
+  { headerName: 'Father Phone', field: 'guardian.father_phone', sortable: true, filter: true },
+  { headerName: 'Roll No', field: 'academic.roll_number', sortable: true, filter: true },
+  { headerName: 'Class', field: 'academic.class_name', sortable: true, filter: true },
+  { headerName: 'Section', field: 'academic.section', sortable: true, filter: true },
+  { headerName: 'Status', field: 'status', sortable: true, filter: true },
+
+  {
+    headerName: 'Actions',
+    field: 'actions',
+    cellRenderer: params => {
+      return `
+        <button class='text-green-600 mr-2 hover:text-green-800'>Edit</button>
+        <button class='text-red-600 hover:text-red-800'>Delete</button>
+      `
+    },
+  },
+]
+
+
 
 const sidebarOpen = ref(false)
 const students = ref([])

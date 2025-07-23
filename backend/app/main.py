@@ -4,11 +4,13 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.routers import auth
 from app.db import Base, engine
 from app.models import user
+from app.routers import admin
+
 
 
 app = FastAPI()
 app.include_router(auth.router)
-
+app.include_router(admin.router)
 app.include_router(student.router, prefix="/api")
 Base.metadata.create_all(bind=engine)
 

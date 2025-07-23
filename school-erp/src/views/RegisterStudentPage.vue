@@ -76,27 +76,27 @@
   <div class="form-grid-2">
     <div class="flex flex-col">
       <label class="form-label">Mobile Number *</label>
-      <input type="text" class="form-input" />
+      <input type="text" class="form-input" v-model="form.mobile" />
     </div>
     <div class="flex flex-col">
       <label class="form-label">Email Address *</label>
-      <input type="email" class="form-input" />
+      <input type="email" class="form-input" v-model="form.email" />
     </div>
     <div class="flex flex-col">
       <label class="form-label">Present Address *</label>
-      <input type="text" class="form-input" />
+      <input type="text" class="form-input" v-model="form.present_address" />
     </div>
     <div class="flex flex-col">
       <label class="form-label">Permanent Address *</label>
-      <input type="text" class="form-input" />
+      <input type="text" class="form-input" v-model="form.permanent_address" />
     </div>
     <div class="flex flex-col">
       <label class="form-label">City / State / Country *</label>
-      <input type="text" class="form-input" />
+      <input type="text" class="form-input" v-model="form.city_state_country" />
     </div>
     <div class="flex flex-col">
       <label class="form-label">ZIP / Postal Code *</label>
-      <input type="text" class="form-input" />
+      <input type="text" class="form-input" v-model="form.zip_code" />
     </div>
   </div>
 </section>
@@ -111,7 +111,7 @@
     </div>
     <div class="flex flex-col">
       <label class="form-label">Father’s Occupation *</label>
-      <input type="text" class="form-input" />
+      <input type="text" class="form-input" v-model="form.guardian.father_occupation" />
     </div>
     <div class="flex flex-col">
       <label class="form-label">Father’s Phone *</label>
@@ -123,7 +123,7 @@
     </div>
     <div class="flex flex-col">
       <label class="form-label">Mother’s Occupation *</label>
-      <input type="text" class="form-input" />
+      <input type="text" class="form-input" v-model="form.guardian.mother_occupation" />
     </div>
     <div class="flex flex-col">
       <label class="form-label">Mother’s Phone *</label>
@@ -131,11 +131,11 @@
     </div>
     <div class="flex flex-col">
       <label class="form-label">Emergency Contact Person *</label>
-      <input type="text" class="form-input" />
+      <input type="text" class="form-input" v-model="form.guardian.emergency_contact_person" />
     </div>
     <div class="flex flex-col">
       <label class="form-label">Emergency Contact Number *</label>
-      <input type="text" class="form-input" />
+      <input type="text" class="form-input" v-model="form.guardian.emergency_contact_number" />
     </div>
   </div>
 </section>
@@ -146,7 +146,7 @@
   <div class="form-grid-3">
     <div class="flex flex-col">
       <label class="form-label">Admission Number *</label>
-      <input type="text" class="form-input" />
+      <input type="text" class="form-input" v-model="form.academic.admission_number" />
     </div>
     <div class="flex flex-col">
       <label class="form-label">Admission Date *</label>
@@ -166,11 +166,11 @@
     </div>
     <div class="flex flex-col">
       <label class="form-label">Previous School</label>
-      <input type="text" class="form-input" />
+      <input type="text" class="form-input" v-model="form.academic.previous_school" />
     </div>
     <div class="flex flex-col">
       <label class="form-label">Transfer Certificate Number (optional)</label>
-      <input type="text" class="form-input" />
+      <input type="text" class="form-input" v-model="form.academic.transfer_certificate" />
     </div>
     <div class="flex flex-col">
       <label class="form-label">House (if applicable)</label>
@@ -185,15 +185,15 @@
   <div class="form-grid-3">
     <div class="flex flex-col">
       <label class="form-label">Fee Plan / Category</label>
-      <input type="text" class="form-input" />
+      <input type="text" class="form-input" v-model="studentData.fee_transport.fee_plan" />
     </div>
     <div class="flex flex-col">
       <label class="form-label">Transport Route / Bus Number</label>
-      <input type="text" class="form-input" />
+      <input type="text" class="form-input" v-model="studentData.fee_transport.transport_route" />
     </div>
     <div class="flex flex-col">
       <label class="form-label">Hostel Room (if applicable)</label>
-      <input type="text" class="form-input" />
+      <input type="text" class="form-input" v-model="studentData.fee_transport.hostel_room" />
     </div>
   </div>
 </section>
@@ -204,23 +204,23 @@
   <div class="form-grid-2">
     <div class="flex flex-col">
       <label class="form-label">Birth Certificate</label>
-      <input type="file" class="form-input-file" />
+      <input type="file" class="form-input-file" v-model="studentData.documents.birth_certificate" />
     </div>
     <div class="flex flex-col">
       <label class="form-label">Passport Size Photo</label>
-      <input type="file" class="form-input-file" />
+      <input type="file" class="form-input-file" v-model="studentData.documents.passport_photo" />
     </div>
     <div class="flex flex-col">
       <label class="form-label">Transfer Certificate</label>
-      <input type="file" class="form-input-file" />
+      <input type="file" class="form-input-file" v-model="studentData.documents.transfer_certificate_doc" />
     </div>
     <div class="flex flex-col">
       <label class="form-label">Aadhar / ID Proof</label>
-      <input type="file" class="form-input-file" />
+      <input type="file" class="form-input-file" v-model="studentData.documents.aadhar_proof" />
     </div>
     <div class="flex flex-col">
       <label class="form-label">Signature (Digital)</label>
-      <input type="file" class="form-input-file" />
+      <input type="file" class="form-input-file" v-model="studentData.documents.signature" />
     </div>
   </div>
 </section>
@@ -235,52 +235,159 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
 import Sidebar from '../components/appSidebar.vue'
 import Navbar from '../components/appNavbar.vue'
-import { reactive } from 'vue'
-import axios from 'axios'
 import { useRouter } from 'vue-router'
+import { reactive } from 'vue'
+import { ref } from 'vue'
+import axios from 'axios'
 
-const router = useRouter()
-const form = reactive({
-  first_name: '',
-  last_name: '',
-  dob: '',
-  gender: '',
-  nationality: '',
-  aadhar_no: '',
-  blood_group: '',
-  profile_photo_url: '',
-  status: 'Active',
-  guardian: {
-    father_name: '',
-    father_phone: '',
-    mother_name: '',
-    mother_phone: ''
+
+export default {
+  name: 'RegisterStudentPage',
+  data() {
+    return {
+      studentData: {
+        // Personal Information
+        first_name: '',
+        middle_name: '',
+        last_name: '',
+        dob: '',
+        gender: '',
+        blood_group: '',
+        nationality: '',
+        aadhar_no: '',
+        profile_photo_url: '',
+        
+        // Contact & Address
+        mobile: '',
+        email: '',
+        present_address: '',
+        permanent_address: '',
+        city_state_country: '',
+        zip_code: '',
+        
+        // Guardian Details
+        guardian: {
+          father_name: '',
+          father_occupation: '',
+          father_phone: '',
+          mother_name: '',
+          mother_occupation: '',
+          mother_phone: '',
+          emergency_contact_person: '',
+          emergency_contact_number: ''
+        },
+        
+        // Academic Details
+        academic: {
+          admission_number: '',
+          admission_date: '',
+          roll_number: '',
+          class_name: '',
+          section: '',
+          previous_school: '',
+          transfer_certificate: '',
+          house: ''
+        },
+        
+        // Fee & Transport
+        fee_transport: {
+          fee_plan: '',
+          transport_route: '',
+          hostel_room: ''
+        },
+        
+        // Documents
+        documents: {
+          birth_certificate: '',
+          passport_photo: '',
+          transfer_certificate_doc: '',
+          aadhar_proof: '',
+          signature: ''
+        }
+      }
+    }
   },
-  academic: {
-    roll_number: '',
-    class_name: '',
-    section: '',
-    admission_date: '',
-    house: ''
-  }
-})
-
-const submitForm = async () => {
-  try {
-    await axios.post('http://localhost:8000/api/students', form)
-    alert('✅ Student registered successfully!')
-    router.push('/students')
-  } catch (err) {
-    console.error('❌ Submission failed:', err)
-    alert('Something went wrong.')
+  methods: {
+    async submitForm() {
+      try {
+        const response = await fetch('http://localhost:8000/api/students', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(this.studentData)
+        });
+        
+        if (response.ok) {
+          const result = await response.json();
+          alert(result.message);
+          this.resetForm();
+        } else {
+          throw new Error('Failed to submit form');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        alert('Error submitting form');
+      }
+    },
+    
+    resetForm() {
+      // Reset all form fields
+      this.studentData = {
+        first_name: '',
+        middle_name: '',
+        last_name: '',
+        dob: '',
+        gender: '',
+        blood_group: '',
+        nationality: '',
+        aadhar_no: '',
+        profile_photo_url: '',
+        mobile: '',
+        email: '',
+        present_address: '',
+        permanent_address: '',
+        city_state_country: '',
+        zip_code: '',
+        guardian: {
+          father_name: '',
+          father_occupation: '',
+          father_phone: '',
+          mother_name: '',
+          mother_occupation: '',
+          mother_phone: '',
+          emergency_contact_person: '',
+          emergency_contact_number: ''
+        },
+        academic: {
+          admission_number: '',
+          admission_date: '',
+          roll_number: '',
+          class_name: '',
+          section: '',
+          previous_school: '',
+          transfer_certificate: '',
+          house: ''
+        },
+        fee_transport: {
+          fee_plan: '',
+          transport_route: '',
+          hostel_room: ''
+        },
+        documents: {
+          birth_certificate: '',
+          passport_photo: '',
+          transfer_certificate_doc: '',
+          aadhar_proof: '',
+          signature: ''
+        }
+      };
+    }
   }
 }
 
-
-const sidebarOpen = ref(false)
 </script>
 
 <style scoped>

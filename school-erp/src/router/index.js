@@ -8,18 +8,19 @@ import FinancePage from '../views/FinancePage.vue'
 import RegisterAdminPage from '../views/RegisterAdminPage.vue'
 import ForgetPassword from '../views/ForgetPassword.vue'
 import users from '../views/users.vue'
+import TestGrid from '../views/TestGrid.vue'
 
 const routes = [
   { path: '/', component: LoginPage }, // Unprotected
+  { path: '/test-grid', component: TestGrid }, // cleaner & safer
   { path: '/dashboard', component: DashboardPage, meta: { requiresAuth: true } },
   { path: '/RegisterStudentPage', component: RegisterStudentPage, meta: { requiresAuth: true } },
   { path: '/students', component: StudentPage, meta: { requiresAuth: true } },
   { path: '/teachers', component: TeacherPage, meta: { requiresAuth: true } },
   { path: '/finance', component: FinancePage, meta: { requiresAuth: true } },
   { path: '/users', component: users, meta: { requiresAuth: true } },
-  { path: '/RegisterAdminPage', component: RegisterAdminPage, meta: { requiresAuth: true } },
+  { path: '/RegisterAdminPage', component: RegisterAdminPage },
   { path: '/ForgetPassword', component: ForgetPassword }, // Public route
-  { path: '/', component: LoginPage }, // Explicit login path for redirects
 ]
 
 const router = createRouter({
