@@ -15,8 +15,7 @@
           <h1 class="text-3xl font-bold text-gray-800 mb-4 md:mb-0">Students</h1>
           <RouterLink
             to="/RegisterStudentPage"
-            class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition duration-200"
-          >
+            class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition duration-200" >
             + Add New Student
           </RouterLink>
         </div>

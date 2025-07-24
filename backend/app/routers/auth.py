@@ -11,9 +11,7 @@ from app.schemas.user import AdminOut
 
 
 router = APIRouter(prefix="/api", tags=["Auth"])
-
-
-router = APIRouter(prefix="/api", tags=["Admins"])
+# router = APIRouter(prefix="/api", tags=["Admins"])
 
 @router.get("/admins", response_model=list[AdminOut])
 def get_all_admins(db: Session = Depends(get_db)):

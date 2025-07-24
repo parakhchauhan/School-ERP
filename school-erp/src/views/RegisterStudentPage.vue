@@ -65,7 +65,7 @@
     </div>
     <div class="flex flex-col">
       <label class="form-label">Profile Photo Upload * (optional)</label>
-      <input type="file" class="form-input-file" />
+      <input type="file" class="form-input-file"  />
     </div>
   </div>
 </section>
@@ -204,23 +204,23 @@
   <div class="form-grid-2">
     <div class="flex flex-col">
       <label class="form-label">Birth Certificate</label>
-      <input type="file" class="form-input-file" v-model="studentData.documents.birth_certificate" />
+      <input type="file" class="form-input-file" @change="handleFileChange($event, 'birth_certificate')" />
     </div>
     <div class="flex flex-col">
       <label class="form-label">Passport Size Photo</label>
-      <input type="file" class="form-input-file" v-model="studentData.documents.passport_photo" />
+      <input type="file" class="form-input-file" @change="handleFileChange($event, 'passport_photo')" />
     </div>
     <div class="flex flex-col">
       <label class="form-label">Transfer Certificate</label>
-      <input type="file" class="form-input-file" v-model="studentData.documents.transfer_certificate_doc" />
+      <input type="file" class="form-input-file" @change="handleFileChange($event, 'transfer_certificate_doc')" />
     </div>
     <div class="flex flex-col">
       <label class="form-label">Aadhar / ID Proof</label>
-      <input type="file" class="form-input-file" v-model="studentData.documents.aadhar_proof" />
+      <input type="file" class="form-input-file" @change="handleFileChange($event, 'aadhar_proof')" />
     </div>
     <div class="flex flex-col">
       <label class="form-label">Signature (Digital)</label>
-      <input type="file" class="form-input-file" v-model="studentData.documents.signature" />
+      <input type="file" class="form-input-file" @change="handleFileChange($event, 'signature')" />
     </div>
   </div>
 </section>
@@ -243,11 +243,7 @@ import { ref } from 'vue'
 import axios from 'axios'
 
 
-export default {
-  name: 'RegisterStudentPage',
-  data() {
-    return {
-      studentData: {
+const studentData = reactive({
         // Personal Information
         first_name: '',
         middle_name: '',
@@ -306,17 +302,11 @@ export default {
           aadhar_proof: '',
           signature: ''
         }
-      }
-    }
-  },
-  methods: {
-    async submitForm() {
+      })
+
+
       try {
-        const response = await fetch('http://localhost:8000/api/students', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
+        const response = await fetch('http://localhost:8000/api/students', { method: 'POST', headers: {'Content-Type': 'application/json',},
           body: JSON.stringify(this.studentData)
         });
         
@@ -331,9 +321,10 @@ export default {
         console.error('Error:', error);
         alert('Error submitting form');
       }
-    },
     
-    resetForm() {
+ 
+const submitForm = async () => {   
+    resetForm = () => {
       // Reset all form fields
       this.studentData = {
         first_name: '',
@@ -386,7 +377,14 @@ export default {
       };
     }
   }
-}
+
+  const handleFileChange = (event, fieldName) => {
+  const file = event.target.files[0];
+  if (file) {
+    studentData.documents[fieldName] = file.name; // or store the file object
+  }
+};
+
 
 </script>
 
